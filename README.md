@@ -10,7 +10,7 @@ Chan Le Van's improvement to the engine (https://github.com/chanlevan/CQELSPLUS)
 
 - Suricata IDS (https://suricata-ids.org/)
 
-- Paho-MQTT python library (pypi.org/project/paho-mqtt)
+- Paho-MQTT python library (https://pypi.org/project/paho-mqtt)
 
 - Chan Le Van's CQELSPLUS engine (https://github.com/chanlevan/CQELSPLUS)
 
