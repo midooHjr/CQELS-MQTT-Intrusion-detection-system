@@ -29,7 +29,7 @@ Chan Le Van's improvement to the engine (https://github.com/chanlevan/CQELSPLUS)
 
 - Need to enable events recording in json format (log result in file "eve.json") through Suricata configuration file "suricata.yaml".
 
-**Python deamon** :
+**Python daemon** :
 
 - Need to define path to "eve.json" log file (var 'json_events' in 'jsonConverter.py').
 
