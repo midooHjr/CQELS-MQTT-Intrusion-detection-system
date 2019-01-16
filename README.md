@@ -51,4 +51,4 @@ In order to properly initialize the CQELS engine the following is done :
 
 - The last three elements are saved under "/tmp/cqels/cqels_data" folder.
 
-Finally, a listner is defined in order to describe the reaction to adopt when some streamed data matches the registred SPARQL query.
+Finally, a listener is defined in order to describe the reaction to adopt when some streamed data matches the registred SPARQL query.
