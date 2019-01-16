@@ -1,6 +1,8 @@
+The goal of this project is to developpe a real-time intrusion detection and reaction system based on the sementic web technologies (RDF and RDF stream processing engine), an open source IDS and MQTT messaging protocol. 
+
 This implementation is being developped using :
 
-Danh Le Phuoc's original CQELS engine implementation (https://code.google.com/archive/p/cqels/)
+Danh Le Phuoc's original CQELS RDF stream processing engine implementation (https://code.google.com/archive/p/cqels/)
 and
 Chan Le Van's improvement to the engine (https://github.com/chanlevan/CQELSPLUS)
 
