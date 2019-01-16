@@ -1,0 +1,23 @@
+#Metadata: Metadata: Location: /home/midoo/tmp/cqels/datasets
+#Tue Jul 10 17:14:02 CEST 2018
+tdb.node.hashsize=16
+tdb.prefixes.indexes=GPU
+tdb.record.triple=24
+tdb.created=2018-07-10T17\:14\:02.366+02\:00
+tdb.create.version=0.8.10
+tdb.type=standalone
+tdb.prefixes.primary=GPU
+tdb.layout=v1
+tdb.prefixes.nodetable.mapping.id2node=prefixes
+tdb.nodetable.mapping.node2id=node2id
+tdb.indexes.quads=GSPO,GPOS,GOSP,POSG,OSPG,SPOG
+tdb.node.layout=1
+tdb.prefixes.index.file=prefixIdx
+tdb.nodeid.size=8
+tdb.indexes.triples.primary=SPO
+tdb.nodetable.mapping.id2node=nodes
+tdb.node.type=dat
+tdb.prefixes.nodetable.mapping.node2id=prefix2id
+tdb.indexes.quads.primary=GSPO
+tdb.indexes.triples=SPO,POS,OSP
+tdb.record.quad=32

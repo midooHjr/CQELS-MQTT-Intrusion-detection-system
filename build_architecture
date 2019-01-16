@@ -1,0 +1,81 @@
+#!/bin/bash
+
+if [[ $EUID -ne 0 ]]; then
+    echo "You must be root to run this script"
+    exit 1
+fi
+
+
+
+#-------------------------------------------------------------Building architecture------------------------------------------------------------#
+
+echo "Constructing netlab architecture..."
+
+# create hosts' namespaces
+ip netns add h1
+ip netns add h2
+
+# create switch
+ovs-vsctl add-br switch
+
+
+# create links 
+ip link add h1-eth0 type veth peer name switch-h1
+ip link add h2-eth0 type veth peer name switch-h2
+
+# attach ends of links to namespaces
+ip link set h1-eth0 netns h1
+ip link set h2-eth0 netns h2
+
+# connect other ends to the switches
+ovs-vsctl add-port switch switch-h1 
+ovs-vsctl add-port switch switch-h2 
+
+
+# activate interfaces in the hosts' namespaces side
+ip netns exec h1 ip link set dev h1-eth0 up
+ip netns exec h1 ip link set dev lo up
+
+ip netns exec h2 ip link set dev h2-eth0 up
+ip netns exec h2 ip link set dev lo up
+
+
+# activate interfaces by the switches sides
+ip link set dev switch-h1 up
+ip link set dev switch-h2 up
+
+
+# configure h1 and h2 IP adresses
+ip netns exec h1 ip a add dev h1-eth0 192.168.43.99/24
+ip netns exec h2 ip a add dev h2-eth0 192.168.43.65/24
+
+
+ip addr add 192.168.43.250/24 dev switch
+ip link set dev switch up
+
+
+#add route from router to physical machine 
+ip netns exec h1 ip route add default via 192.168.43.250
+ip netns exec h2 ip route add default via 192.168.43.250
+
+# activate forwarding 
+ip netns exec h1 sudo sysctl net.ipv4.conf.all.forwarding=1
+ip netns exec h2 sudo sysctl net.ipv4.conf.all.forwarding=1
+echo 1 > /proc/sys/net/ipv4/ip_forward
+
+
+#1/ Authorize router to access internet:
+#1.1 Enable masquerading of router 
+sudo iptables -t nat -A POSTROUTING -o wlo1 -j MASQUERADE
+#1.2 Allow forwarding between linux and router netns
+sudo iptables -A FORWARD -i wlo1 -o switch -j ACCEPT
+sudo iptables -A FORWARD -o wlo1 -i switch -j ACCEPT
+
+
+
+#/bin/bash --rcfile <(echo "PS1=\"h1> \"")
+#/bin/bash --rcfile <(echo "PS1=\"h2> \"")
+
+
+
+

@@ -1,0 +1,37 @@
+PREFIX evt:<http://tridso.org/events/>
+PREFIX pkt:<http://tridso.org/events/packets/>
+PREFIX alrt:<http://tridso.org/events/alerts/>
+PREFIX ip:<http://tridso.org/events/IPLayers/>
+PREFIX l4:<http://tridso.org/events/IPLayers/4thLayers/>
+PREFIX icmp:<http://tridso.org/events/IPLayers/ICMPLayers/>
+PREFIX tcp:<http://tridso.org/events/IPLayers/4thLayers/TCPLayers/>
+PREFIX udp:<http://tridso.org/events/IPLayers/4thLayers/UDPLayer/>
+PREFIX str:<http://tridso.org/string/>
+PREFIX int:<http://tridso.org/int/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT DISTINCT ?target ?intruder (count(distinct ?icmpLayer) as ?numPings) 
+WHERE {
+	STREAM <http://deri.org/streams/rfid> [RANGE 1m]
+	{?event evt:hasAlert ?alert .
+	 ?alert evt:hasIPLayer ?ipLayer .
+	 ?ipLayer ip:hasSrcIP ?intruder .
+	 ?ipLayer ip:hasDstIP ?target .
+	 ?ipLayer ip:hasICMPLayer ?icmpLayer .
+	 ?icmpLayer icmp:hasICMPType str:echo_request}
+	}
+GROUP BY ?target ?intruder
+HAVING (?numPings > 3)
+
+
+
+
+
+
+
+
+
+
+
+  
